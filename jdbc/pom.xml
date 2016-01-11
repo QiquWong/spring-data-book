@@ -1,116 +1,151 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>spring-data-book-jdbc</artifactId>
-	
-	<name>Spring Data Book - JDBC</name>
-	
-	<parent>
-		<groupId>com.oreilly.springdata</groupId>
-		<artifactId>spring-data-book</artifactId>
-		<version>1.0.0.BUILD-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+    <artifactId>spring-data-book-jdbc</artifactId>
 
-	<dependencies>
-	
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jdbc-core</artifactId>
-			<version>1.0.0.RELEASE</version>
-		</dependency>
-	
-		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-sql</artifactId>
-			<version>${querydsl.version}</version>
-		</dependency>
+    <name>Spring Data Book - JDBC</name>
 
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>2.2.8</version>
-			<scope>runtime</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
+    <parent>
+        <groupId>com.oreilly.springdata</groupId>
+        <artifactId>spring-data-book</artifactId>
+        <version>1.0.0.BUILD-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
-	</dependencies>
-	
-	<build>
+    <dependencies>
 
-		<plugins>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jdbc-core</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${basedir}/src/generated/java</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-	
-			<plugin>
-				<groupId>com.mysema.querydsl</groupId>
-				<artifactId>querydsl-maven-plugin</artifactId>
-				<version>${querydsl.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>export</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<jdbcDriver>org.hsqldb.jdbc.JDBCDriver</jdbcDriver>
-					<jdbcUrl>jdbc:hsqldb:file:${project.basedir}/db/init;files_readonly=true</jdbcUrl>
-					<jdbcUser>sa</jdbcUser>
-					<schemaPattern>PUBLIC</schemaPattern>
-					<packageName>com.oreilly.springdata.jdbc.domain</packageName>
-					<targetFolder>${project.basedir}/src/generated/java</targetFolder>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.hsqldb</groupId>
-						<artifactId>hsqldb</artifactId>
-						<version>2.2.8</version>
-					</dependency>
-					<dependency>
-						<groupId>ch.qos.logback</groupId>
-						<artifactId>logback-classic</artifactId>
-						<version>${logback.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-		</plugins>
-	</build>
+        <dependency>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-sql</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.2.8</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/src/generated/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.googlecode</groupId>
+                <artifactId>maven-db-plugin</artifactId>
+                <version>1.4</version>
+                <configuration>
+                    <adminDbConnectionSettings>
+                        <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
+                        <jdbcUrl>jdbc:mysql://192.168.2.50:3306?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8</jdbcUrl>
+                        <userName>root</userName>
+                        <password>123456</password>
+                    </adminDbConnectionSettings>
+                    <appDbConnectionSettings>
+                        <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
+                        <jdbcUrl>jdbc:mysql://192.168.2.50:3306/spring_data?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8</jdbcUrl>
+                        <userName>root</userName>
+                        <password>123456</password>
+                    </appDbConnectionSettings>
+                    <dbSchemaScriptsDirectory>
+                        <param>src/main/sql/schema</param>
+                    </dbSchemaScriptsDirectory>
+                    <dbDropStatements>drop database spring_data</dbDropStatements>
+                    <dbCreateStatements>create database spring_data CHARACTER SET 'utf8';</dbCreateStatements>
+                    <sqlDelimiter>;;</sqlDelimiter>
+                    <scriptEncoding>UTF-8</scriptEncoding>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.36</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>com.mysema.querydsl</groupId>
+                <artifactId>querydsl-maven-plugin</artifactId>
+                <version>${querydsl.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>export</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
+                    <jdbcUrl>jdbc:mysql://192.168.2.50:3306/spring_data?useUnicode=true&amp;characterEncoding=utf-8</jdbcUrl>
+                    <jdbcUser>root</jdbcUser>
+                    <jdbcPassword>123456</jdbcPassword>
+                    <!-- generated the package contains the output class -->
+                    <packageName>com.oreilly.springdata.jdbc.domain</packageName>
+                    <!-- specify the output target directory -->
+                    <targetFolder>${project.basedir}/src/generated/java</targetFolder>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.36</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                        <version>${logback.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

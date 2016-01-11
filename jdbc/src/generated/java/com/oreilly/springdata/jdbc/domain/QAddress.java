@@ -23,27 +23,25 @@ public class QAddress extends com.mysema.query.sql.RelationalPathBase<QAddress> 
 
     public final StringPath country = createString("COUNTRY");
 
-    public final NumberPath<Long> customerId = createNumber("CUSTOMER_ID", Long.class);
+    public final NumberPath<Integer> customerId = createNumber("CUSTOMER_ID", Integer.class);
 
-    public final NumberPath<Long> id = createNumber("ID", Long.class);
+    public final NumberPath<Integer> id = createNumber("ID", Integer.class);
 
     public final StringPath street = createString("STREET");
 
-    public final com.mysema.query.sql.PrimaryKey<QAddress> sysPk10029 = createPrimaryKey(id);
-
-    public final com.mysema.query.sql.ForeignKey<QCustomer> addressCustomerRef = createForeignKey(customerId, "ID");
+    public final com.mysema.query.sql.PrimaryKey<QAddress> primary = createPrimaryKey(id);
 
     public QAddress(String variable) {
-        super(QAddress.class, forVariable(variable), "PUBLIC", "ADDRESS");
+        super(QAddress.class, forVariable(variable), "null", "ADDRESS");
     }
 
     @SuppressWarnings("all")
     public QAddress(Path<? extends QAddress> path) {
-        super((Class)path.getType(), path.getMetadata(), "PUBLIC", "ADDRESS");
+        super((Class)path.getType(), path.getMetadata(), "null", "ADDRESS");
     }
 
     public QAddress(PathMetadata<?> metadata) {
-        super(QAddress.class, metadata, "PUBLIC", "ADDRESS");
+        super(QAddress.class, metadata, "null", "ADDRESS");
     }
 
 }
