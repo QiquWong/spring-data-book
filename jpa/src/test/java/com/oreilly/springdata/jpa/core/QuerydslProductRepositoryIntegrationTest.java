@@ -15,23 +15,23 @@
  */
 package com.oreilly.springdata.jpa.core;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
+import com.mysema.query.types.Predicate;
+import com.oreilly.springdata.jpa.AbstractIntegrationTest;
+import com.oreilly.springdata.jpa.ApplicationConfig;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.mysema.query.types.Predicate;
-import com.oreilly.springdata.jpa.AbstractIntegrationTest;
-import com.oreilly.springdata.jpa.ApplicationConfig;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Integration test showing the usage of Querydsl {@link Predicate} to query repositories implementing
  * {@link QueryDslPredicateExecutor}.
- * 
+ *
  * @author Oliver Gierke
  */
 @ContextConfiguration(classes = ApplicationConfig.class)
