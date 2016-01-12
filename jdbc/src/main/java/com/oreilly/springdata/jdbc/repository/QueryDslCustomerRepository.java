@@ -88,6 +88,7 @@ public class QueryDslCustomerRepository implements CustomerRepository {
 	@Override
 	public void save(final Customer customer) {
 		if (customer.getId() == null) {
+			// 1
 			Long generatedKey = qdslTemplate.insertWithKey(qCustomer, new SqlInsertWithKeyCallback<Long>() {
 				@Override
 				public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) throws SQLException {
@@ -100,6 +101,7 @@ public class QueryDslCustomerRepository implements CustomerRepository {
 			});
 			customer.setId(generatedKey);
 		} else {
+			// 2
 			qdslTemplate.update(qCustomer, new SqlUpdateCallback() {
 				@Override
 				public long doInSqlUpdateClause(SQLUpdateClause update) {
@@ -116,11 +118,14 @@ public class QueryDslCustomerRepository implements CustomerRepository {
 		final List<Long> ids = new ArrayList<Long>();
 		for (Address a : customer.getAddresses()) {
 			if (a.getId() != null) {
+				// 3
+				// Note: new customer with existing address
 				ids.add(a.getId());
 			}
 		}
 		// first delete any potentially removed addresses
 		if (ids.size() > 0) {
+			// 4
 			qdslTemplate.delete(qAddress, new SqlDeleteCallback() {
 				@Override
 				public long doInSqlDeleteClause(SQLDeleteClause delete) {
@@ -131,6 +136,7 @@ public class QueryDslCustomerRepository implements CustomerRepository {
 		// then update existing ones and add new ones
 		for (final Address a : customer.getAddresses()) {
 			if (a.getId() != null) {
+				// 5
 				qdslTemplate.update(qAddress, new SqlUpdateCallback() {
 					@Override
 					public long doInSqlUpdateClause(SQLUpdateClause update) {
@@ -140,6 +146,8 @@ public class QueryDslCustomerRepository implements CustomerRepository {
 					}
 				});
 			} else {
+				// 6
+				// insert new one
 				qdslTemplate.insert(qAddress, new SqlInsertCallback() {
 					@Override
 					public long doInSqlInsertClause(SQLInsertClause insert) {
@@ -149,6 +157,11 @@ public class QueryDslCustomerRepository implements CustomerRepository {
 				});
 			}
 		}
+
+		/**
+		 * processing: 1 -> 6, new customer with new address
+		 *
+		 */
 	}
 
 	@Override

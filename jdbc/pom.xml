@@ -84,13 +84,15 @@
                 <configuration>
                     <adminDbConnectionSettings>
                         <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
-                        <jdbcUrl>jdbc:mysql://192.168.2.50:3306?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8</jdbcUrl>
+                        <jdbcUrl>jdbc:mysql://192.168.2.50:3306?useUnicode=true&amp;characterEncoding=utf-8</jdbcUrl>
                         <userName>root</userName>
                         <password>123456</password>
                     </adminDbConnectionSettings>
                     <appDbConnectionSettings>
                         <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
-                        <jdbcUrl>jdbc:mysql://192.168.2.50:3306/spring_data?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8</jdbcUrl>
+                        <jdbcUrl>
+                            jdbc:mysql://192.168.2.50:3306/spring_data?useUnicode=true&amp;characterEncoding=utf-8
+                        </jdbcUrl>
                         <userName>root</userName>
                         <password>123456</password>
                     </appDbConnectionSettings>
@@ -123,20 +125,18 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
-                    <jdbcUrl>jdbc:mysql://192.168.2.50:3306/spring_data?useUnicode=true&amp;characterEncoding=utf-8</jdbcUrl>
-                    <jdbcUser>root</jdbcUser>
-                    <jdbcPassword>123456</jdbcPassword>
-                    <!-- generated the package contains the output class -->
+                    <jdbcDriver>org.hsqldb.jdbc.JDBCDriver</jdbcDriver>
+                    <jdbcUrl>jdbc:hsqldb:file:${project.basedir}/db/init;files_readonly=true</jdbcUrl>
+                    <jdbcUser>sa</jdbcUser>
+                    <schemaPattern>PUBLIC</schemaPattern>
                     <packageName>com.oreilly.springdata.jdbc.domain</packageName>
-                    <!-- specify the output target directory -->
                     <targetFolder>${project.basedir}/src/generated/java</targetFolder>
                 </configuration>
                 <dependencies>
                     <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.36</version>
+                        <groupId>org.hsqldb</groupId>
+                        <artifactId>hsqldb</artifactId>
+                        <version>2.2.8</version>
                     </dependency>
                     <dependency>
                         <groupId>ch.qos.logback</groupId>

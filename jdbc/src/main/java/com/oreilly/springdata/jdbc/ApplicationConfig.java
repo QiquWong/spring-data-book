@@ -18,27 +18,27 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan
+@ComponentScan(basePackages = "com.oreilly.springdata.jdbc.repository")
 @PropertySource("classpath:jdbc.properties")
 class ApplicationConfig {
 
-	@Autowired
-	Environment env;
+    @Autowired
+    Environment env;
 
-	@Bean
-	public DataSource dataSource() {
-		BasicDataSource ds = new BasicDataSource();
-		ds.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-		ds.setUrl(env.getProperty("jdbc.url"));
-		ds.setUsername(env.getProperty("jdbc.username"));
-		ds.setPassword(env.getProperty("jdbc.password"));
-		return ds;
-	}
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+        ds.setUrl(env.getProperty("jdbc.url"));
+        ds.setUsername(env.getProperty("jdbc.username"));
+        ds.setPassword(env.getProperty("jdbc.password"));
+        return ds;
+    }
 
-	@Bean
-	public PlatformTransactionManager transactionManager() {
-		DataSourceTransactionManager txManager = new DataSourceTransactionManager();
-		txManager.setDataSource(dataSource());
-		return txManager;
-	}
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        DataSourceTransactionManager txManager = new DataSourceTransactionManager();
+        txManager.setDataSource(dataSource());
+        return txManager;
+    }
 }

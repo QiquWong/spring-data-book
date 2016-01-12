@@ -23,23 +23,25 @@ public class QCustomer extends com.mysema.query.sql.RelationalPathBase<QCustomer
 
     public final StringPath firstName = createString("FIRST_NAME");
 
-    public final NumberPath<Integer> id = createNumber("ID", Integer.class);
+    public final NumberPath<Long> id = createNumber("ID", Long.class);
 
     public final StringPath lastName = createString("LAST_NAME");
 
-    public final com.mysema.query.sql.PrimaryKey<QCustomer> primary = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<QCustomer> sysPk10026 = createPrimaryKey(id);
+
+    public final com.mysema.query.sql.ForeignKey<QAddress> _addressCustomerRef = createInvForeignKey(id, "CUSTOMER_ID");
 
     public QCustomer(String variable) {
-        super(QCustomer.class, forVariable(variable), "null", "CUSTOMER");
+        super(QCustomer.class, forVariable(variable), "PUBLIC", "CUSTOMER");
     }
 
     @SuppressWarnings("all")
     public QCustomer(Path<? extends QCustomer> path) {
-        super((Class)path.getType(), path.getMetadata(), "null", "CUSTOMER");
+        super((Class)path.getType(), path.getMetadata(), "PUBLIC", "CUSTOMER");
     }
 
     public QCustomer(PathMetadata<?> metadata) {
-        super(QCustomer.class, metadata, "null", "CUSTOMER");
+        super(QCustomer.class, metadata, "PUBLIC", "CUSTOMER");
     }
 
 }
