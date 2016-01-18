@@ -25,23 +25,25 @@ import org.springframework.web.client.RestOperations;
 
 /**
  * Sample client to access {@link Products} exposed by the REST exporter.
- * 
+ *
  * @author Oliver Gierke
  */
 class ProductsClient {
 
 	/**
 	 * A sample DTO to have a {@link Resource} object typed to {@link com.oreilly.springdata.rest.core.Product}.
-	 * 
+	 *
 	 * @author Oliver Gierke
 	 */
 	static class Product extends Resource<com.oreilly.springdata.rest.core.Product> {
-
+		public Product() {
+			super(null, new Link[]{});
+		}
 	}
 
 	/**
 	 * A DTO for a paged collection resource of {@link Product}s.
-	 * 
+	 *
 	 * @author Oliver Gierke
 	 */
 	static class Products extends Resources<Product> {

@@ -39,7 +39,9 @@ class OrderClient {
 	 * @author Oliver Gierke
 	 */
 	static class Order extends Resource<com.oreilly.springdata.rest.order.Order> {
-
+		public Order() {
+			super(null, new Link[]{});
+		}
 	}
 
 	/**

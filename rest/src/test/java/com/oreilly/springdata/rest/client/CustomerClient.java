@@ -25,48 +25,51 @@ import org.springframework.web.client.RestOperations;
 
 /**
  * Sample client to access {@link Customers} exposed by the REST exporter.
- * 
+ *
  * @author Oliver Gierke
  */
 class CustomerClient {
 
-	/**
-	 * A sample DTO to have a {@link Resource} object typed to {@link com.oreilly.springdata.rest.core.Customer}.
-	 * 
-	 * @author Oliver Gierke
-	 */
-	static class Customer extends Resource<com.oreilly.springdata.rest.core.Customer> {
+    /**
+     * A sample DTO to have a {@link Resource} object typed to {@link com.oreilly.springdata.rest.core.Customer}.
+     *
+     * @author Oliver Gierke
+     */
+    // fixed bug when upgrade spring-data-rest-webmvc to v2.4.2.RELEASE
+    static class Customer extends Resource<com.oreilly.springdata.rest.core.Customer> {
+        public Customer() {
+            super(null, new Link[]{});
+        }
+    }
 
-	}
+    /**
+     * DTO to bind a paged collection resource of {@link Customer}s.
+     *
+     * @author Oliver Gierke
+     */
+    static class Customers extends PagedResources<Customer> {
 
-	/**
-	 * DTO to bind a paged collection resource of {@link Customer}s.
-	 * 
-	 * @author Oliver Gierke
-	 */
-	static class Customers extends PagedResources<Customer> {
+    }
 
-	}
+    public static void main(String[] args) {
 
-	public static void main(String[] args) {
+        // Setup RestTemplate though Spring
+        ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(ClientConfiguration.class);
+        context.registerShutdownHook();
+        RestOperations restOperations = context.getBean(RestOperations.class);
 
-		// Setup RestTemplate though Spring
-		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(ClientConfiguration.class);
-		context.registerShutdownHook();
-		RestOperations restOperations = context.getBean(RestOperations.class);
+        // Access root resource
+        ResourceSupport result = restOperations.getForObject(ClientConfiguration.BASE_URL, Resource.class);
 
-		// Access root resource
-		ResourceSupport result = restOperations.getForObject(ClientConfiguration.BASE_URL, Resource.class);
+        Link link = result.getLink(ClientConfiguration.CUSTOMERS_REL);
+        System.out.println("Following: " + link.getHref());
 
-		Link link = result.getLink(ClientConfiguration.CUSTOMERS_REL);
-		System.out.println("Following: " + link.getHref());
+        // Follow link relation for customers to access those
+        Customers customers = restOperations.getForObject(link.getHref(), Customers.class);
 
-		// Follow link relation for customers to access those
-		Customers customers = restOperations.getForObject(link.getHref(), Customers.class);
-
-		for (Customer dto : customers) {
-			com.oreilly.springdata.rest.core.Customer customer = dto.getContent();
-			System.out.println(customer.getFirstname() + " " + customer.getLastname());
-		}
-	}
+        for (Customer dto : customers) {
+            com.oreilly.springdata.rest.core.Customer customer = dto.getContent();
+            System.out.println(customer.getFirstname() + " " + customer.getLastname());
+        }
+    }
 }
